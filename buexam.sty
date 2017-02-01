@@ -1,0 +1,425 @@
+% This can only be used with the ``exam'' document class
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesFile{buexam}[2013/02/26 Custom LaTeX Style for Bournemouth University Examinations, written by Richard Southern]
+
+\usepackage{graphicx}   % Need this to include the logo
+\usepackage[ddmmyyyy]{datetime} % Use this for date time formatting
+\usepackage{tabularx}   % Used for table center alignment
+\usepackage[pdfborder={0 0 0}]{hyperref} % hyperref needed for forms!
+\usepackage[normalem]{ulem} % Underlining isn't there by default
+\usepackage{setspace}   % Specify spacing between lines (setstretch gives you more control)
+\usepackage{helvet}     % Use Arial font throughout
+\usepackage{amsmath}    % For extended maths symbols
+\usepackage{algorithm}  % Very useful algorithm package
+\usepackage{algorithmic}% More algorithm markup package
+\usepackage{sfmath}     % For more readable math fonts
+\usepackage{listings}   % For code listings
+\usepackage{pstricks}   % For images and colors
+\usepackage{lastpage}   % Needed to get the last page counter (doesn't play nice with other packages!)
+\usepackage{datetime}   % Needed for \today
+
+\setstretch{1.2}        % Sets line spacing to 1.2
+\pagestyle{headandfoot} % Headers and Footers
+\widowpenalty=10000     % Penalise widows (lonely titles)
+\clubpenalty=10000      % Penalise clubs (lines of text on new pages)
+\renewcommand{\questionshook}{\setlength{\itemsep}{0.5in}}
+\renewcommand{\partshook}{\setlength{\itemsep}{0.5in}}
+\renewcommand{\subpartshook}{\setlength{\itemsep}{0.5in}}
+\renewcommand{\familydefault}{\sfdefault}
+
+% Keep track of our own section counting
+\newcounter{sectioncount}
+\setcounter{sectioncount}{1}
+
+% This is a command for our own Section management, which uses the user specified section instructions
+\newcommand{\sectioninstructions}[1] {
+	\item[] {
+		\hspace{-1cm}	
+		\begin{tabular}{l}
+			\noindent \large \textbf{\uline{SECTION \Alph{sectioncount}}}\\
+			\noindent \large #1
+		\end{tabular} \addtocounter{sectioncount}{1}
+	}
+}
+
+% The headers and footers for each page. Note, the footer has been removed from the latest template
+\runningheader{}{\unittitle}{Page \thepage\ of \pageref{LastPage}}
+\runningfooter{}{}{}
+
+% This is the formatting command for questions - currently displays name of question
+\qformat{\large\textbf{\thequestion~~\thequestiontitle}\dotfill(\totalpoints)}
+
+% Exam details - these must be renewed in the including file before the bucoversheet is called
+\newcommand{\unittitle}{unittitle}
+\newcommand{\setunittitle}[1]{\renewcommand{\unittitle}{#1}}
+
+\newcommand{\unittitleshort}{unittitleshort}
+\newcommand{\setunittitleshort}[1]{\renewcommand{\unittitleshort}{#1}}
+
+\newcommand{\unitlevel}{unitlevel}
+\newcommand{\setunitlevel}[1]{\renewcommand{\unitlevel}{#1}}
+
+\newcommand{\unitrefs}{unitrefs}
+\newcommand{\setunitrefs}[1]{\renewcommand{\unitrefs}{#1}}
+
+\newcommand{\unitleadername}{unitleadername}
+\newcommand{\setunitleadername}[1]{\renewcommand{\unitleadername}{#1}}
+
+\newcommand{\unitleaderext}{unitleaderext}
+\newcommand{\setunitleaderext}[1]{\renewcommand{\unitleaderext}{#1}}
+
+\newcommand{\assistantname}{assistantname}
+\newcommand{\setassistantname}[1]{\renewcommand{\assistantname}{#1}}
+
+\newcommand{\assistantext}{assistantext}
+\newcommand{\setassistantext}[1]{\renewcommand{\assistantext}{#1}}
+
+\newcommand{\examref}{examref}
+\newcommand{\setexamref}[1]{\renewcommand{\examref}{#1}}
+
+\newcommand{\examdate}{examdate}
+\newcommand{\setexamdate}[1]{\renewcommand{\examdate}{#1}}
+
+\newcommand{\examstarttime}{start}
+\newcommand{\setexamstarttime}[1]{\renewcommand{\examstarttime}{#1}}
+
+\newcommand{\examendtime}{end}
+\newcommand{\setexamendtime}[1]{\renewcommand{\examendtime}{#1}}
+
+\newcommand{\exampublishdate}{\today}
+\newcommand{\setexampublishdate}[1]{\renewcommand{\exampublishdate}{#1}}
+
+\newcommand{\instructionstocandidates}{
+
+See Front Page Instruction Samples document \href{https://sasportal.bournemouth.ac.uk/exams/Exam\%20Question\%20Paper\%20Documents/Example\%20INSTRUCTIONS\%20(exam\%20papers).docx}{[here]}.
+
+This could include information about:
+\begin{itemize}
+\item If question paper needs to be handed in
+\item Questions to answer
+\item Allocation of marks
+\item Where / how to answer questions (e.g. answer books /  MCQ answer sheet etc)
+\item Supplied materials 
+\item Permitted materials / equipment
+\end{itemize}
+
+}
+\newcommand{\setinstructions}[1]{\renewcommand{\instructionstocandidates}{#1}}
+
+
+% This is the mark style (currently square brackets, dropped at end of question).
+% To get the mark for the question you need to use \droppoint at the place you want the marks to be displayed.
+\marksnotpoints
+\pointsdroppedatright
+\bracketedpoints
+
+% This defines the numbering, so we have 2.3.1 for subparts. Goes down to subsubparts
+\renewcommand{\thepartno}{\arabic{partno}}
+\renewcommand{\thesubpart}{\arabic{subpart}}
+\renewcommand{\partlabel}{\thequestion.\thepartno}
+\renewcommand{\subpartlabel}{\thequestion.\thepartno.\thesubpart}
+\renewcommand{\subsubpartlabel}{\thequestion.\thepartno.\thesubpart.\thesubsubpart}
+
+% This draws a line across the screen, used with the bucoversheet. You can change the thickness of the line (currently 2pt)
+\newcommand{\thinline}{\noindent\textcolor{gray}{\rule{\textwidth}{2pt}}}
+
+% Nifty macro for creating input text fields
+\newcommand{\field}[1]{\TextField[name=#1,default=#1,bordercolor={1 1 1},borderwidth=0pt,charsize=12pt]{}}
+\newcommand{\timefield}[1]{\TextField[name=#1,default=#1,bordercolor={1 1 1},borderwidth=0pt,charsize=12pt,width=0.2\linewidth]{}}
+
+% This is the coversheet. This should be at the start of your document. Note that it ends on a \newpage
+% The fields are editable, meaning that the paper does not need to be rebuilt each time.
+\AtBeginDocument{
+\noindent \begin{tabular}{p{0.45\textwidth} p{0.45\textwidth}}
+\begin{minipage}[c]{\linewidth} 
+\includegraphics[width=3cm]{bulogo.pdf}
+\end{minipage}&
+\begin{minipage}[c]{\linewidth}           
+ \begin{Form}
+ \begin{tabular}[b]{ll}
+   \textbf{Date:}&\field{\examdate}\\
+   \textbf{Time:}&\timefield{\examstarttime}--\timefield{\examendtime}\\
+   \textbf{Level:}&\field{\unitlevel}
+ \end{tabular}
+ \end{Form}
+\end{minipage}
+\end{tabular}\\
+\vspace{0.5cm}\\
+\thinline \vspace{0.2cm}\\
+\begin{tabular}{@{}p{0.2\textwidth}p{0.8\textwidth}@{}}
+{\large \bf Exam Name:}&{\large \bf \unittitle}
+\end{tabular}\\
+\thinline \vspace{0.2cm}\\
+\begin{tabular}{@{}p{0.2\textwidth}p{0.8\textwidth}@{}}
+{\large \bf Unit refs:}&{\large \bf \unitrefs}
+\end{tabular}\\
+\thinline \vspace{0.2cm}\\
+{\noindent\bf \uline{INSTRUCTIONS TO CANDIDATES:}}\\
+\instructionstocandidates
+\newpage
+\begin{questions}
+}
+
+% This should have the postamble, but unfortunately the lastpage package adds a \clearpage, so it can't be input here.
+\AtEndDocument{
+\end{questions}
+}
+
+% This used to be in an \AtEndOfDocument environment, but this adds a \clearpage, which does not
+% conform with the stylesheet. You need to add this after the last question, before the \end{document}
+% Note these fields can be input into the PDF, but will be filled in with the default.
+\newcommand{\afterlastquestion}[0] {
+\vspace{0.2cm}\thinline \\ \vspace{0.2cm}
+
+\begin{Form}
+\begin{tabular}{p{0.3\linewidth}p{0.6\linewidth}}  
+Name of Unit leader\dotfill&	\unitleadername\\
+Ext No.\dotfill&		\unitleaderext\\
+Name of PSO\dotfill&		\assistantname\\
+Ext No.\dotfill&		\assistantext
+\end{tabular}
+\end{Form}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Below is the code listings for code markup. Currently I support the following
+% formatting options (more available on request): 
+% - CPP: 	C++ code (and bu extension C)
+% - GLSL: 	OpenGL Shader Language
+% - RM: 	Renderman code
+% - CONSOLE:	Something that would appear in a bash shell
+% There are two ways to include code using these markups
+% 1) Between a \begin{CPP}\end{CPP} pair, for big chunks of code, and
+% 2) \cppinline{keyword} (also \rminline, \glslinline, \consoleinline) for inline 
+% markup if you want write code  markup inline. You'll probably use the 1st one 
+% most of the time.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% GLSL listing definitions
+\lstdefinelanguage{GLSL}
+{
+	sensitive=true,
+	alsoletter={\#},
+	morekeywords=[1]{
+		attribute, const, uniform, varying,
+		layout, centroid, flat, smooth,
+		noperspective, break, continue, do,
+		for, while, switch, case, default, if,
+		else, in, out, inout, float, double, int, void,
+		bool, true, false, invariant, discard,
+		return, mat2, mat3, mat4, mat2x2, mat2x3,
+		mat2x4, mat3x2, mat3x3, mat3x4, mat4x2,
+		mat4x3, mat4x4, dmat2, dmat3, dmat4, dmat2x2, dmat2x3,
+		dmat2x4, dmat3x2, dmat3x3, dmat3x4, dmat4x2,
+		dmat4x3, dmat4x4,vec2, vec3, vec4, ivec2,
+		ivec3, ivec4, bvec2, bvec3, bvec4, uint,
+		uvec2, uvec3, uvec4, dvec2, dvec3, dvec4, 
+		lowp, mediump, highp,
+		precision, sampler1D, sampler2D, sampler3D,
+		samplerCube, sampler1DShadow,
+		sampler2DShadow, samplerCubeShadow,
+		sampler1DArray, sampler2DArray,
+		sampler1DArrayShadow, sampler2DArrayShadow,
+		isampler1D, isampler2D, isampler3D,
+		isamplerCube, isampler1DArray,
+		isampler2DArray, usampler1D, usampler2D,
+		usampler3D, usamplerCube, usampler1DArray,
+		usampler2DArray, sampler2DRect,
+		sampler2DRectShadow, isampler2DRect,
+		usampler2DRect, samplerBuffer,
+		isamplerBuffer, usamplerBuffer, sampler2DMS,
+		isampler2DMS, usampler2DMS,
+		sampler2DMSArray, isampler2DMSArray,
+		usampler2DMSArray, struct
+	},
+	morekeywords=[2]{
+		radians,degrees,sin,cos,tan,asin,acos,atan,
+		atan,sinh,cosh,tanh,asinh,acosh,atanh,pow,
+		exp,log,exp2,log2,sqrt,inversesqrt,abs,sign,
+		floor,trunc,round,roundEven,ceil,fract,mod,modf,
+		min,max,clamp,mix,step,smoothstep,isnan,isinf,
+		floatBitsToInt,floatBitsToUint,intBitsToFloat,
+		uintBitsToFloat,length,distance,dot,cross,
+		normalize,faceforward,reflect,refract,
+		matrixCompMult,outerProduct,transpose,
+		determinant,inverse,lessThan,lessThanEqual,
+		greaterThan,greaterThanEqual,equal,notEqual,
+		any,all,not,textureSize,texture,textureProj,
+		textureLod,textureOffset,texelFetch,
+		texelFetchOffset,textureProjOffset,
+		textureLodOffset,textureProjLod,
+		textureProjLodOffset,textureGrad,
+		textureGradOffset,textureProjGrad,
+		textureProjGradOffset,texture1D,texture1DProj,
+		texture1DProjLod,texture2D,texture2DProj,
+		texture2DLod,texture2DProjLod,texture3D,
+		texture3DProj,texture3DLod,texture3DProjLod,
+		textureCube,textureCubeLod,shadow1D,shadow2D,
+		shadow1DProj,shadow2DProj,shadow1DLod,
+		shadow2DLod,shadow1DProjLod,shadow2DProjLod,
+		dFdx,dFdy,fwidth,noise1,noise2,noise3,noise4,
+		EmitVertex,EndPrimitive
+	},
+	morekeywords=[3]{
+		gl_VertexID,gl_InstanceID,gl_Position,
+		gl_PointSize,gl_ClipDistance,gl_PerVertex,
+		gl_Layer,gl_ClipVertex,gl_FragCoord,
+		gl_FrontFacing,gl_ClipDistance,gl_FragColor,
+		gl_FragData,gl_MaxDrawBuffers,gl_FragDepth,
+		gl_PointCoord,gl_PrimitiveID,
+		gl_MaxVertexAttribs,gl_MaxVertexUniformComponents,
+		gl_MaxVaryingFloats,gl_MaxVaryingComponents,
+		gl_MaxVertexOutputComponents,
+		gl_MaxGeometryInputComponents,
+		gl_MaxGeometryOutputComponents,
+		gl_MaxFragmentInputComponents,
+		gl_MaxVertexTextureImageUnits,
+		gl_MaxCombinedTextureImageUnits,
+		gl_MaxTextureImageUnits,
+		gl_MaxFragmentUniformComponents,
+		gl_MaxDrawBuffers,gl_MaxClipDistances,
+		gl_MaxGeometryTextureImageUnits,
+		gl_MaxGeometryOutputVertices,
+		gl_MaxGeometryOutputVertices,
+		gl_MaxGeometryTotalOutputComponents,
+		gl_MaxGeometryUniformComponents,
+		gl_MaxGeometryVaryingComponents,gl_DepthRange,
+		\#version,core
+	},
+	morecomment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	%morecomment=[l][keywordstyle4]{\#},
+}
+
+
+\definecolor{glslbg}{rgb}{0.95,0.95,0.95}
+\definecolor{rmbg}{rgb}{0.95,0.95, 0.95}
+\definecolor{cppbg}{rgb}{0.95,0.95,0.95}
+
+\lstdefinelanguage{rendermansl}
+{ 
+  % list of keywords
+  morekeywords={ __asm, __based, __cdecl, __export, __far, __fastcall,__fortran, __huge, __inline, __interrupt, __loadds, __near, __pascal, __saveregs, __segment, __segname, __self, 
+\#define, \#elif, \#else, \#endif, \#error, \#if, \#ifdef, \#ifndef, \#include, \#line, \#pragma, \#undef ,auto, break, case, char, color, const, continue, default, do, double, else, enum, extern, 
+float,for,goto,if,int,long,normal, point,
+register,return, 
+short,signed,sizeof,static,struct,switch,typedef,
+uniform,union,unsigned,
+varying,void,volatile,while,Ci,Cl,Cs,E,I,
+L,N,Ng,Oi,Ol,Os,P,
+alpha,class, 
+dPdu,dPdv,delete,displacement,du,dv,friend,
+imager,inline,
+light,ncomps,new,null,operator,
+printf,private,protected,public,s,surface,
+t,this,time,transformation,try,u,
+v,version,virtual,volume ,
+__multiple_inheritance ,__single_inheritance ,__virtual_inheritance ,
+Du,Dv,abs,acos,asin,atan,ceil ,clamp,cos ,
+degrees,exp,
+filteredpulse,filteredpulsetrain,floor,max,min,mod,noise,
+pow,pulse,pulsetrain,random,round,
+sign,sin,smoothstep,snoise ,snoisexy,sqr,sqrt,step,
+tan,vsnoise,area,
+calculatenormal,depth ,distance,
+faceforward,fresnel ,
+length,normalize,
+reflect,refract ,
+setxcomp,setzcomp, 
+transform,ycomp,comp,
+mix,setcomp,ambient,phong,specular,trace,bump,diffuse,vector,matrix,point,
+environment,shadow,texture,incident,opposite },
+  sensitive=false, % keywords are not case-sensitive
+  morecomment=[l]{//}, % l is for line comment
+  morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+  morestring=[b]" % defines that strings are enclosed in double quotes
+}
+
+\newcommand{\sharedlstset}{\lstset{
+        tabsize=2,
+        basicstyle=\ttfamily,
+        upquote=true,
+        columns=flexible,
+        showstringspaces=false,
+        extendedchars=true,
+        breaklines=true,
+        prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+        frame=tb,
+        %frameround=tttt,
+        aboveskip=2pt,
+        belowskip=2pt,
+        captionpos=t,
+        showtabs=false,
+        numbers=left,
+        numberstyle=\tiny\color{gray},
+        showspaces=false,
+        showstringspaces=false,
+        identifierstyle=\ttfamily,
+        commentstyle=\color[rgb]{0.082,0.639,0.082},
+        keywordstyle=[1]\color[rgb]{0,0,0.75},
+        keywordstyle=[2]\color[rgb]{0.5,0.0,0.0},
+        keywordstyle=[3]\color[rgb]{0.127,0.427,0.514},
+        keywordstyle=[4]\color[rgb]{0.4,0.4,0.4},        
+        keywordstyle=\color{blue},
+        stringstyle=\color{red},
+        morecomment=[l][\color{magenta}]{\#}}}
+
+\newcommand{\glsllstset}{\sharedlstset\lstset{
+	language=GLSL,
+        backgroundcolor=\color{glslbg}}}
+
+\newcommand{\rmlstset}{\sharedlstset\lstset{
+	language=RM,
+        backgroundcolor=\color{rmbg}}}
+        
+\newcommand{\cpplstset}{\sharedlstset\lstset{
+	language=C++,
+        backgroundcolor=\color{cppbg}}}
+
+\newcommand{\consolelstset}{\sharedlstset\lstset{
+ 	language=bash,
+	backgroundcolor=\color{black},        
+	basicstyle=\bf\color{white}\scriptsize\ttfamily}}
+
+% Define our new GLSL environment \begin{GLSL}\end{GLSL}
+\lstnewenvironment{GLSL}{\glsllstset}{}
+
+% Define our new Renderman environment: \begin{C++}\end{C++}
+\lstnewenvironment{RM}{\rmlstset}{}
+
+% Define our new C++ environment: \begin{C++}\end{C++}
+\lstnewenvironment{CPP}{\cpplstset}{}
+
+% Define our console environment \begin{console} \end{console}
+\lstnewenvironment{console}{\consolelstset}{}
+
+% Command for inlining GLSL code
+\newcommand{\glslinline}[1]{
+  \glsllstset                     % Use our shared glsl settings
+  \lstset{basicstyle=\ttfamily}   % To make the font size same as surrounding text
+  \colorbox{glslbg}               % A shared command to have consistent colour
+  {\lstinline[language=GLSL]$#1$} % In a box to allow inline in tabular env
+}
+
+% Command for RM inlining
+\newcommand{\rminline}[1]{
+  \rmlstset                     % Use our shared glsl settings
+  \lstset{basicstyle=\ttfamily}   % To make the font size same as surrounding text
+  \colorbox{rmbg}               % A shared command to have consistent colour
+  {\lstinline[language=RM]$#1$} % In a box to allow inline in tabular env
+}
+
+% Command for inlining CPP code
+\newcommand{\cppinline}[1]{
+  \cpplstset
+  \lstset{basicstyle=\ttfamily}
+  \colorbox{cppbg}
+  {\lstinline[language=C++]$#1$}
+}
+
+% Command for inlining CPP code
+\newcommand{\consoleinline}[1]{
+  \consolelstset
+  \lstset{basicstyle=\ttfamily}
+  \colorbox{consolebg}
+  {\lstinline[language=bash]$#1$}
+}
