@@ -1,7 +1,9 @@
 % Note this requires the (standard) exam package
 \documentclass[a4paper,12pt,addpoints]{exam} 
 
-%This is the package which you need to include
+%This is the package which you need to include. The ``onlynumbers'' option make part numbering numerical only (e.g. 2.1.5)
+%\usepackage[onlynumbers]{buexam}
+% By default, part numbering is number.letter.roman, e.g. 2.a.v
 \usepackage{buexam}
 
 % The Unit title of the exam (append RESIT to the end if necessary)
@@ -11,19 +13,19 @@
 % The unit reference (might be the same as short name)
 \setunitrefs{ZPMM}
 % The level of the examination (4,5,6 etc)
-\setunitlevel{4}
+\setunitlevel{L4}
 % The exam reference (get this from the school
 \setexamref{ZZZ1234Z}
 % The date of the exam
 \setexamdate{10/06/2013}
 % Unit leader of the course
-\setunitleadername{Richard Southern}
+\setunitleadername{Anne Onymous}
 % Unit leader extension
-\setunitleaderext{61877}
+\setunitleaderext{60000}
 % Assistant name
-\setassistantname{Ben Ellis}
+\setassistantname{John Doe}
 % Assitant extension
-\setassistantext{65745}
+\setassistantext{60000}
 
 % There are the specific instructions for candidates
 % \renewcommand{\instructionstocandidates}{
@@ -85,19 +87,27 @@ int main ()
   return 0;
 }
 \end{CPP}
-In your own words, explain:
 \begin{parts}
 %Example of code inclusion
-\part[5] Was this code produced by a Zombie? If so, why?\droppoints
+\part In your own words, explain:
+\begin{subparts}
+\subpart[5] Was this code produced by a Zombie? If so, why?\droppoints
 \begin{solution}
 Clearly, the lameness indicates that it is Zombie generated code (ZGC).
 \end{solution}
-
-\part[5] How would you improve on the above code? \droppoints
+\subpart[5] How would you improve on the above code? \droppoints 
 \begin{solution}
 Don't use the std namespace! Better to give your fingers exercise and type it every time.
 \end{solution}
+\end{subparts}
+
+\part[10] Write a page essay on any topic you like. Appropriate use of references required.\droppoints
+\begin{solution}
+ Blah Blah Blah
+\end{solution}
+
 \end{parts}
+
 \newpage
 
 \titledquestion{Zombie Algorithms}

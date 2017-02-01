@@ -2,6 +2,16 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesFile{buexam}[2013/02/26 Custom LaTeX Style for Bournemouth University Examinations, written by Richard Southern]
 
+
+\renewcommand{\thepartno}{\alph{partno}}
+\renewcommand{\thesubpart}{\roman{subpart}}
+\DeclareOption{onlynumbers}{
+  \renewcommand{\thepartno}{\arabic{partno}}
+  \renewcommand{\thesubpart}{\arabic{subpart}}
+}
+\DeclareOption*{\PackageWarning{buexam}{Unknown '\CurrentOption'}}
+\ProcessOptions\relax
+
 \usepackage{graphicx}   % Need this to include the logo
 \usepackage[ddmmyyyy]{datetime} % Use this for date time formatting
 \usepackage{tabularx}   % Used for table center alignment
@@ -43,7 +53,7 @@
 }
 
 % The headers and footers for each page. Note, the footer has been removed from the latest template
-\runningheader{}{\unittitle}{Page \thepage\ of \pageref{LastPage}}
+\runningheader{}{\unittitle \\ \thinline}{Page \thepage\ of \pageref{LastPage} \\}
 \runningfooter{}{}{}
 
 % This is the formatting command for questions - currently displays name of question
@@ -114,8 +124,7 @@ This could include information about:
 \bracketedpoints
 
 % This defines the numbering, so we have 2.3.1 for subparts. Goes down to subsubparts
-\renewcommand{\thepartno}{\arabic{partno}}
-\renewcommand{\thesubpart}{\arabic{subpart}}
+
 \renewcommand{\partlabel}{\thequestion.\thepartno}
 \renewcommand{\subpartlabel}{\thequestion.\thepartno.\thesubpart}
 \renewcommand{\subsubpartlabel}{\thequestion.\thepartno.\thesubpart.\thesubsubpart}
