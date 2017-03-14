@@ -27,6 +27,7 @@
 \usepackage{pstricks}   % For images and colors
 \usepackage{lastpage}   % Needed to get the last page counter (doesn't play nice with other packages!)
 \usepackage{datetime}   % Needed for \today
+\usepackage{enumitem}   % Needed for instructions itemize tabbing
 
 \setstretch{1.2}        % Sets line spacing to 1.2
 \pagestyle{headandfoot} % Headers and Footers
@@ -64,7 +65,7 @@
 % To get the mark for the question you need to use \droppoint at the place you want the marks to be displayed.
 \marksnotpoints
 \pointsdroppedatright
-\pointformat{[\themarginpoints]\hspace{1.5cm}}
+\pointformat{[\themarginpoints]\hspace{0.8cm}}
 
 
 % Exam details - these must be renewed in the including file before the bucoversheet is called
@@ -107,14 +108,11 @@
 \newcommand{\exampublishdate}{\today}
 \newcommand{\setexampublishdate}[1]{\renewcommand{\exampublishdate}{#1}}
 
-\newcommand{\sitstatus}{sit}
-\newcommand{\setsitstatus}[1]{\renewcommand{\sitstatus}{#1}}
-
 \newcommand{\instructionstocandidates}{
-See Front Page Instruction Samples document \href{https://sasportal.bournemouth.ac.uk/exams/Exam\%20Question\%20Paper\%20Documents/Example\%20INSTRUCTIONS\%20(exam\%20papers).docx}{[here]}.
+See Front Page Instruction Samples document \href{https://docs.bournemouth.ac.uk/sites/as/exams/Exam\%20Question\%20Paper\%20Documents/Example\%20INSTRUCTIONS\%20(exam\%20papers).docx}{[here]}.
 
 This could include information about:
-\begin{itemize}
+\begin{itemize}[leftmargin=0pt]
 \item[] If question paper needs to be handed in
 \item[] Questions to answer
 \item[] Allocation of marks
@@ -143,7 +141,7 @@ This could include information about:
 \AtBeginDocument{
 \noindent \begin{tabular}{p{0.6\textwidth} p{0.4\textwidth}}
 \begin{minipage}[c]{\linewidth} 
-\includegraphics[width=3cm]{bulogo_black.pdf}
+\includegraphics[width=3cm]{bulogo}
 \end{minipage}&
 \begin{minipage}[c]{\linewidth}           
  \begin{Form}
@@ -158,7 +156,7 @@ This could include information about:
 \vspace{0.5cm}\\
 \thinline \vspace{0.2cm}\\
 \begin{tabular}{@{}p{0.2\textwidth}p{0.8\textwidth}@{}}
-{\bf Exam Name:}&{\bf \unittitle \hspace{0.1cm} -- \hspace{0.05cm} \unitlevel \hspace{0.05cm} -- \hspace{0.05cm} \MakeUppercase{\sitstatus}}
+{\bf Exam Name:}&{\bf \MakeUppercase{\unittitle}}
 \end{tabular}\\
 \thinline \vspace{0.2cm}\\
 \begin{tabular}{@{}p{0.2\textwidth}p{0.8\textwidth}@{}}
@@ -179,8 +177,8 @@ This could include information about:
 % This used to be in an \AtEndOfDocument environment, but this adds a \clearpage, which does not
 % conform with the stylesheet. You need to add this after the last question, before the \end{document}
 % Note these fields can be input into the PDF, but will be filled in with the default.
-\newcommand{\afterlastquestion}[0] {
-\vspace{0.2cm}\thinline \\ \vspace{0.2cm}
+\newcommand{\afterlastquestion}[0] { \vfill
+\vspace{0.1cm}\thinline \\ \vspace{0.1cm} 
 
 \begin{Form}
 \begin{tabular}{p{0.3\linewidth}p{0.6\linewidth}}  
