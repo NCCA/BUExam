@@ -1,6 +1,6 @@
 % This can only be used with the ``exam'' document class
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesFile{buexam}[2013/02/26 Custom LaTeX Style for Bournemouth University Examinations, written by Richard Southern]
+\ProvidesFile{buexam}[2017/03/14 Custom LaTeX Style for Bournemouth University Examinations, written by Richard Southern]
 
 
 \renewcommand{\thepartno}{\alph{partno}}
@@ -46,18 +46,26 @@
 	\item[] {
 		\hspace{-1cm}	
 		\begin{tabular}{l}
-			\noindent \large \textbf{\uline{SECTION \Alph{sectioncount}}}\\
-			\noindent \large #1
+			\noindent \textbf{\uline{SECTION \Alph{sectioncount}}}\\
+			\noindent #1
 		\end{tabular} \addtocounter{sectioncount}{1}
 	}
 }
 
 % The headers and footers for each page. Note, the footer has been removed from the latest template
-\runningheader{}{\unittitle \\ \thinline}{Page \thepage\ of \pageref{LastPage} \\}
+\runningheader{}{ {\footnotesize \bf \MakeUppercase{\unittitle}} \\ \thinline}{{\footnotesize \bf Page \thepage\ of \pageref{LastPage}} \\}
 \runningfooter{}{}{}
 
 % This is the formatting command for questions - currently displays name of question
-\qformat{\large\textbf{\thequestion~~\thequestiontitle}\dotfill(\totalpoints)}
+\qformat{\textbf{\thequestion~~\thequestiontitle}\dotfill(\totalpoints)}
+
+% This is the points formatting command for dropping the points
+% This is the mark style (currently square brackets, dropped at end of question).
+% To get the mark for the question you need to use \droppoint at the place you want the marks to be displayed.
+\marksnotpoints
+\pointsdroppedatright
+\pointformat{[\themarginpoints]\hspace{1.5cm}}
+
 
 % Exam details - these must be renewed in the including file before the bucoversheet is called
 \newcommand{\unittitle}{unittitle}
@@ -99,35 +107,29 @@
 \newcommand{\exampublishdate}{\today}
 \newcommand{\setexampublishdate}[1]{\renewcommand{\exampublishdate}{#1}}
 
-\newcommand{\instructionstocandidates}{
+\newcommand{\sitstatus}{sit}
+\newcommand{\setsitstatus}[1]{\renewcommand{\sitstatus}{#1}}
 
+\newcommand{\instructionstocandidates}{
 See Front Page Instruction Samples document \href{https://sasportal.bournemouth.ac.uk/exams/Exam\%20Question\%20Paper\%20Documents/Example\%20INSTRUCTIONS\%20(exam\%20papers).docx}{[here]}.
 
 This could include information about:
 \begin{itemize}
-\item If question paper needs to be handed in
-\item Questions to answer
-\item Allocation of marks
-\item Where / how to answer questions (e.g. answer books /  MCQ answer sheet etc)
-\item Supplied materials 
-\item Permitted materials / equipment
+\item[] If question paper needs to be handed in
+\item[] Questions to answer
+\item[] Allocation of marks
+\item[] Where / how to answer questions (e.g. answer books /  MCQ answer sheet etc)
+\item[] Supplied materials
+\item[] Permitted materials / equipment
+\item[] Note, this list should be created without bullet points (hence the \textbackslash item[])
 \end{itemize}
-
 }
 \newcommand{\setinstructions}[1]{\renewcommand{\instructionstocandidates}{#1}}
 
-
-% This is the mark style (currently square brackets, dropped at end of question).
-% To get the mark for the question you need to use \droppoint at the place you want the marks to be displayed.
-\marksnotpoints
-\pointsdroppedatright
-\bracketedpoints
-
 % This defines the numbering, so we have 2.3.1 for subparts. Goes down to subsubparts
-
-\renewcommand{\partlabel}{\thequestion.\thepartno}
-\renewcommand{\subpartlabel}{\thequestion.\thepartno.\thesubpart}
-\renewcommand{\subsubpartlabel}{\thequestion.\thepartno.\thesubpart.\thesubsubpart}
+\renewcommand{\partlabel}{\thequestion. \thepartno)}
+\renewcommand{\subpartlabel}{\thequestion. \thepartno) \thesubpart)}
+\renewcommand{\subsubpartlabel}{\thequestion. \thepartno) \thesubpart) \thesubsubpart)}
 
 % This draws a line across the screen, used with the bucoversheet. You can change the thickness of the line (currently 2pt)
 \newcommand{\thinline}{\noindent\textcolor{gray}{\rule{\textwidth}{2pt}}}
@@ -139,9 +141,9 @@ This could include information about:
 % This is the coversheet. This should be at the start of your document. Note that it ends on a \newpage
 % The fields are editable, meaning that the paper does not need to be rebuilt each time.
 \AtBeginDocument{
-\noindent \begin{tabular}{p{0.45\textwidth} p{0.45\textwidth}}
+\noindent \begin{tabular}{p{0.6\textwidth} p{0.4\textwidth}}
 \begin{minipage}[c]{\linewidth} 
-\includegraphics[width=3cm]{bulogo.pdf}
+\includegraphics[width=3cm]{bulogo_black.pdf}
 \end{minipage}&
 \begin{minipage}[c]{\linewidth}           
  \begin{Form}
@@ -156,14 +158,14 @@ This could include information about:
 \vspace{0.5cm}\\
 \thinline \vspace{0.2cm}\\
 \begin{tabular}{@{}p{0.2\textwidth}p{0.8\textwidth}@{}}
-{\large \bf Exam Name:}&{\large \bf \unittitle}
+{\bf Exam Name:}&{\bf \unittitle \hspace{0.1cm} -- \hspace{0.05cm} \unitlevel \hspace{0.05cm} -- \hspace{0.05cm} \MakeUppercase{\sitstatus}}
 \end{tabular}\\
 \thinline \vspace{0.2cm}\\
 \begin{tabular}{@{}p{0.2\textwidth}p{0.8\textwidth}@{}}
-{\large \bf Unit refs:}&{\large \bf \unitrefs}
+{\bf Unit refs:}&{\bf \unitrefs}
 \end{tabular}\\
 \thinline \vspace{0.2cm}\\
-{\noindent\bf \uline{INSTRUCTIONS TO CANDIDATES:}}\\
+{\noindent\bf \uline{INSTRUCTIONS TO CANDIDATES}}\\
 \instructionstocandidates
 \newpage
 \begin{questions}

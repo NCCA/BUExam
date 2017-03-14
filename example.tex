@@ -6,6 +6,9 @@
 % By default, part numbering is number.letter.roman, e.g. 2.a.v
 \usepackage{buexam}
 
+% Disable paragraph indenting throughout
+\setlength\parindent{0pt}
+
 % The Unit title of the exam (append RESIT to the end if necessary)
 \setunittitle{Zombies in Popular Media and Mathematics}
 % A shortened / abbreviated name of the unit
@@ -26,20 +29,28 @@
 \setassistantname{John Doe}
 % Assitant extension
 \setassistantext{60000}
+% Set if this is a sit or resit paper (valid values are sit or resit)
+\setsitstatus{sit}
+
 
 % There are the specific instructions for candidates
-% \renewcommand{\instructionstocandidates}{
-% \begin{itemize}
-% \item There are \textbf{THREE} questions
-% \item Answer \textbf{ALL} questions
-% \item All questions carry equal marks
-% \item \textbf{NO} calculators, laptops or any other electronic equipment are permitted
-% \item \textbf{NO} additional materials may be used
-% \end{itemize}
-% }
+\setinstructions{
+See Front Page Instruction Samples document \href{https://sasportal.bournemouth.ac.uk/exams/Exam\%20Question\%20Paper\%20Documents/Example\%20INSTRUCTIONS\%20(exam\%20papers).docx}{[here]}.
+
+This could include information about:
+\begin{itemize}
+\item[] If question paper needs to be handed in
+\item[] Questions to answer
+\item[] Allocation of marks
+\item[] Where / how to answer questions (e.g. answer books /  MCQ answer sheet etc)
+\item[] Supplied materials
+\item[] Permitted materials / equipment
+\item[] Note, this list should be created without bullet points (hence the \textbackslash item[])
+\end{itemize}
+}
 
 % This option should be commented out for the final paper (don't forget!)
-\printanswers
+%\printanswers
 
 \begin{document}
 
@@ -60,10 +71,10 @@ Consider Zombies in films.
 \end{solution}
 
 % Maths example
-\part[10] State the average number of characters eaten by a single Zombie in "`28 Days Later"'. Use the following formula:
+\part[10] State the average number of characters eaten by a single Zombie in "`28 Days Later"'. Use the following formula: \droppoints
 \begin{align}
 \bar{x} &= \frac{1}{n}\cdot \sum_{i=1}^{n} x_i \nonumber
-\end{align}\droppoints
+\end{align}
 \begin{solution}
 At least 3. Zombies are awesome.
 \end{solution}
