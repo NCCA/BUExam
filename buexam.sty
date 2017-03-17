@@ -181,7 +181,7 @@ This could include information about:
 % conform with the stylesheet. You need to add this after the last question, before the \end{document}
 % Note these fields can be input into the PDF, but will be filled in with the default.
 \newcommand{\afterlastquestion}[0] { 
-\vfill\hspace{-\marksmargin}\thinline \\ \vspace{0.05cm} 
+\null\vfill\hspace{-\marksmargin}\thinline \\ \vspace{0.05cm} 
 
 \begin{Form}
 \begin{tabular}{p{0.3\linewidth}p{0.6\linewidth}}  
@@ -307,7 +307,7 @@ Ext No.\dotfill&		\assistantext
 \definecolor{rmbg}{rgb}{0.95,0.95, 0.95}
 \definecolor{cppbg}{rgb}{0.95,0.95,0.95}
 
-\lstdefinelanguage{rendermansl}
+\lstdefinelanguage{RM}
 { 
   % list of keywords
   morekeywords={ __asm, __based, __cdecl, __export, __far, __fastcall,__fortran, __huge, __inline, __interrupt, __loadds, __near, __pascal, __saveregs, __segment, __segname, __self, 
