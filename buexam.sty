@@ -65,8 +65,11 @@
 % To get the mark for the question you need to use \droppoint at the place you want the marks to be displayed.
 \marksnotpoints
 \pointsdroppedatright
-\pointformat{[\themarginpoints]\hspace{0.8cm}}
+\newcommand{\marksmargin}{0.8cm}
+\pointformat{[\themarginpoints]\hspace{\marksmargin}}
 
+% Disable paragraph indenting throughout
+\setlength\parindent{0pt}
 
 % Exam details - these must be renewed in the including file before the bucoversheet is called
 \newcommand{\unittitle}{unittitle}
@@ -177,8 +180,8 @@ This could include information about:
 % This used to be in an \AtEndOfDocument environment, but this adds a \clearpage, which does not
 % conform with the stylesheet. You need to add this after the last question, before the \end{document}
 % Note these fields can be input into the PDF, but will be filled in with the default.
-\newcommand{\afterlastquestion}[0] { \vfill
-\vspace{0.1cm}\thinline \\ \vspace{0.1cm} 
+\newcommand{\afterlastquestion}[0] { 
+\vfill\hspace{-\marksmargin}\thinline \\ \vspace{0.05cm} 
 
 \begin{Form}
 \begin{tabular}{p{0.3\linewidth}p{0.6\linewidth}}  
