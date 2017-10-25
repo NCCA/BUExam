@@ -1,6 +1,6 @@
 % This can only be used with the ``exam'' document class
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesFile{buexam}[2017/03/14 Custom LaTeX Style for Bournemouth University Examinations, written by Richard Southern]
+\ProvidesFile{buexam}[2017/10/25 Custom LaTeX Style for Bournemouth University Examinations, written by Richard Southern]
 
 
 \renewcommand{\thepartno}{\alph{partno}}
@@ -28,6 +28,7 @@
 \usepackage{lastpage}   % Needed to get the last page counter (doesn't play nice with other packages!)
 \usepackage{datetime}   % Needed for \today
 \usepackage{enumitem}   % Needed for instructions itemize tabbing
+\usepackage{tcolorbox}  % Improves the colour options
 
 \setstretch{1.2}        % Sets line spacing to 1.2
 \pagestyle{headandfoot} % Headers and Footers
@@ -306,6 +307,7 @@ Ext No.\dotfill&		\assistantext
 \definecolor{glslbg}{rgb}{0.95,0.95,0.95}
 \definecolor{rmbg}{rgb}{0.95,0.95, 0.95}
 \definecolor{cppbg}{rgb}{0.95,0.95,0.95}
+\definecolor{cudabg}{rgb}{1.0,0.95, 0.95}
 
 \lstdefinelanguage{RM}
 { 
@@ -387,6 +389,18 @@ environment,shadow,texture,incident,opposite },
 	language=C++,
         backgroundcolor=\color{cppbg}}}
 
+\newcommand{\cudalstset}{\sharedlstset\lstset{
+	language=C++,
+	backgroundcolor=\color{cudabg},	
+	emph={__device__, __global__, __shared__, __host__, __constant__},
+	morekeywords={dim3, char1, uchar1, char2, uchar2, char3, uchar3, char4, uchar4,
+		      short1, ushort1, short2, ushort2, short3, ushort3, short4, ushort4,
+		      int1, uint1, int2, uint2, int3, uint3, int4, uint4,
+		      long1, ulong1, long2, ulong2, long3, ulong3, long4, ulong4,
+		      float1, float2, float3, float4, double1, double2},
+        emphstyle={\color{red}}}}
+        
+        
 \newcommand{\consolelstset}{\sharedlstset\lstset{
  	language=bash,
 	backgroundcolor=\color{black},        
@@ -400,6 +414,9 @@ environment,shadow,texture,incident,opposite },
 
 % Define our new C++ environment: \begin{C++}\end{C++}
 \lstnewenvironment{CPP}{\cpplstset}{}
+
+% Define our CUDA source code environment: \begin{CUDA}\end{CUDA}
+\lstnewenvironment{CUDA}{\cudalstset}{}
 
 % Define our console environment \begin{console} \end{console}
 \lstnewenvironment{console}{\consolelstset}{}
@@ -428,7 +445,15 @@ environment,shadow,texture,incident,opposite },
   {\lstinline[language=C++]$#1$}
 }
 
-% Command for inlining CPP code
+% Command for inlining CUDA code
+\newcommand{\cudainline}[1]{
+  \cudalstset
+  \lstset{basicstyle=\ttfamily}
+  \colorbox{cudabg}
+  {\lstinline[language=C++]$#1$}
+}
+
+% Command for inlining bash code
 \newcommand{\consoleinline}[1]{
   \consolelstset
   \lstset{basicstyle=\ttfamily}

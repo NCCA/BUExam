@@ -85,21 +85,37 @@ At least 3. Zombies are awesome.
 
 \titledquestion{Zombie Programming}
 Consider the following code segment:
-\begin{CPP}
-#include <iostream>
-using namespace std;
 
-int main ()
-{
-  cout << "Hello World!";
+\begin{CUDA}
+#include <iostream>
+#include <math.h>
+
+// Kernel function to add the elements of two arrays
+__global__ void add(int n, float *x, float *y) {
+  for (int i = 0; i < n; i++) y[i] = x[i] + y[i];
+}
+
+int main(void) {
+  int N = 1<<20;
+  float *x, *y;
+  // Allocate Unified Memory – accessible from CPU or GPU
+  cudaMallocManaged(&x, N*sizeof(float));
+  cudaMallocManaged(&y, N*sizeof(float));
+  // initialize x and y arrays on the host
+  for (int i = 0; i < N; i++) x[i] = 1.0f; y[i] = 2.0f;
+  // Run kernel on 1M elements on the GPU
+  add<<<1, 1>>>(N, x, y);
+  // Free memory
+  cudaFree(x); cudaFree(y);
   return 0;
 }
-\end{CPP}
+\end{CUDA}
+
 \begin{parts}
 %Example of code inclusion
 \part In your own words, explain:
 \begin{subparts}
-\subpart[5] Was this code produced by a Zombie? If so, why?\droppoints
+\subpart[5] Was this code produced by a Zombie? Consider the use of \cudainline{__global__}. \droppoints
 \begin{solution}
 Clearly, the lameness indicates that it is Zombie generated code (ZGC).
 \end{solution}
