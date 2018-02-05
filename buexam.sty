@@ -308,6 +308,8 @@ Ext No.\dotfill&		\assistantext
 \definecolor{rmbg}{rgb}{0.95,0.95, 0.95}
 \definecolor{cppbg}{rgb}{0.95,0.95,0.95}
 \definecolor{cudabg}{rgb}{1.0,0.95, 0.95}
+\definecolor{consolebg}{rgb}{0,0,0}
+\definecolor{bnfbg}{rgb}{1.0,1.0,1.0}
 
 \lstdefinelanguage{RM}
 { 
@@ -392,7 +394,7 @@ environment,shadow,texture,incident,opposite },
 \newcommand{\cudalstset}{\sharedlstset\lstset{
 	language=C++,
 	backgroundcolor=\color{cudabg},	
-	emph={__device__, __global__, __shared__, __host__, __constant__},
+	emph={__device__, __global__, __shared__, __host__, __constant__,__syncthreads,cudaThreadSynchronize},
 	morekeywords={dim3, char1, uchar1, char2, uchar2, char3, uchar3, char4, uchar4,
 		      short1, ushort1, short2, ushort2, short3, ushort3, short4, ushort4,
 		      int1, uint1, int2, uint2, int3, uint3, int4, uint4,
@@ -403,8 +405,14 @@ environment,shadow,texture,incident,opposite },
         
 \newcommand{\consolelstset}{\sharedlstset\lstset{
  	language=bash,
-	backgroundcolor=\color{black},        
+	backgroundcolor=\color{consolebg},        
 	basicstyle=\bf\color{white}\scriptsize\ttfamily}}
+	
+\newcommand{\bnflstset}{\sharedlstset\lstset{
+	language=C,
+	mathescape=true,
+	backgroundcolor=\color{bnfbg},
+	basicstyle=\ttfamily}}
 
 % Define our new GLSL environment \begin{GLSL}\end{GLSL}
 \lstnewenvironment{GLSL}{\glsllstset}{}
@@ -420,6 +428,8 @@ environment,shadow,texture,incident,opposite },
 
 % Define our console environment \begin{console} \end{console}
 \lstnewenvironment{console}{\consolelstset}{}
+
+\lstnewenvironment{BNF}{\bnflstset}{}
 
 % Command for inlining GLSL code
 \newcommand{\glslinline}[1]{
@@ -459,4 +469,12 @@ environment,shadow,texture,incident,opposite },
   \lstset{basicstyle=\ttfamily}
   \colorbox{consolebg}
   {\lstinline[language=bash]$#1$}
+}
+
+% Command for inlining bash code
+\newcommand{\bnfinline}[1]{
+  \bnflstset
+  \lstset{basicstyle=\ttfamily}
+  \colorbox{bnfbg}
+  {\lstinline[language=C]$#1$}
 }
