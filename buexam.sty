@@ -55,7 +55,7 @@
 }
 
 % The headers and footers for each page. Note, the footer has been removed from the latest template
-\runningheader{}{ {\footnotesize \bf \MakeUppercase{\unittitle}} \\ \thinline}{{\footnotesize \bf Page \thepage\ of \pageref{LastPage}} \\}
+\runningheader{ {\footnotesize \bf \MakeUppercase{\unittitle}} \\ \thinline}{}{{\footnotesize \bf Page \thepage\ of \pageref{LastPage}} \\}
 \runningfooter{}{}{}
 
 % This is the formatting command for questions - currently displays name of question
@@ -97,33 +97,51 @@
 \newcommand{\assistantext}{assistantext}
 \newcommand{\setassistantext}[1]{\renewcommand{\assistantext}{#1}}
 
+% Deprecated as of 2018/19
 \newcommand{\examref}{examref}
 \newcommand{\setexamref}[1]{\renewcommand{\examref}{#1}}
 
+% New as of 2018/19
+\newcommand{\academicyear}{academicyear}
+\newcommand{\setacademicyear}[1]{\renewcommand{\academicyear}{#1}}
+
+% New as of 2018/19
+\newcommand{\durationhours}{durationhours}
+\newcommand{\setdurationhours}[1]{\renewcommand{\durationhours}{#1}}
+
+% New as of 2018/19
+\newcommand{\durationminutes}{durationminutes}
+\newcommand{\setdurationminutes}[1]{\renewcommand{\durationminutes}{#1}}
+
+% Deprecated as of 2018/19
 \newcommand{\examdate}{examdate}
 \newcommand{\setexamdate}[1]{\renewcommand{\examdate}{#1}}
 
+% Deprecated as of 2018/19
 \newcommand{\examstarttime}{start}
 \newcommand{\setexamstarttime}[1]{\renewcommand{\examstarttime}{#1}}
 
+% Deprecated as of 2018/19
 \newcommand{\examendtime}{end}
 \newcommand{\setexamendtime}[1]{\renewcommand{\examendtime}{#1}}
 
+% Deprecated as of 2018/19
 \newcommand{\exampublishdate}{\today}
 \newcommand{\setexampublishdate}[1]{\renewcommand{\exampublishdate}{#1}}
 
 \newcommand{\instructionstocandidates}{
-See Front Page Instruction Samples document \href{https://docs.bournemouth.ac.uk/sites/as/exams/Exam\%20Question\%20Paper\%20Documents/Example\%20INSTRUCTIONS\%20(exam\%20papers).docx}{[here]}.
+See Front Page Instruction Samples document \href{https://docs.bournemouth.ac.uk/sites/as/exams/default.aspx}{[here]}.
 
 This could include information about:
-\begin{itemize}[leftmargin=0pt]
+\begin{itemize}[leftmargin=0.5in]
 \item[] If question paper needs to be handed in
-\item[] Questions to answer
+\item[] Number of questions to answer
 \item[] Allocation of marks
 \item[] Where / how to answer questions (e.g. answer books /  MCQ answer sheet etc)
 \item[] Supplied materials
 \item[] Permitted materials / equipment
 \item[] Note, this list should be created without bullet points (hence the \textbackslash item[])
+\item[] This exam \textbf{must} include Exam Question Paper Checklist, available \href{https://docs.bournemouth.ac.uk/sites/as/exams/Exam\%20Question\%20Paper\%20Documents/EXAM\%20QUESTION\%20PAPER\%20TEMPLATE\%202018-19.dotx}{[here]}.
 \end{itemize}
 }
 \newcommand{\setinstructions}[1]{\renewcommand{\instructionstocandidates}{#1}}
@@ -134,7 +152,7 @@ This could include information about:
 \renewcommand{\subsubpartlabel}{\thequestion. \thepartno) \thesubpart) \thesubsubpart)}
 
 % This draws a line across the screen, used with the bucoversheet. You can change the thickness of the line (currently 2pt)
-\newcommand{\thinline}{\noindent\textcolor{gray}{\rule{\textwidth}{2pt}}}
+\newcommand{\thinline}{\noindent\textcolor{gray}{\rule{\textwidth}{0pt}}}
 
 % Nifty macro for creating input text fields
 \newcommand{\field}[1]{\TextField[name=#1,default=#1,bordercolor={1 1 1},borderwidth=0pt,charsize=12pt]{}}
@@ -150,9 +168,9 @@ This could include information about:
 \begin{minipage}[c]{\linewidth}           
  \begin{Form}
  \begin{tabular}[b]{ll}
-   \textbf{Date:}&\field{\examdate}\\
-   \textbf{Time:}&\timefield{\examstarttime}--\timefield{\examendtime}\\
-   \textbf{Level:}&\field{\unitlevel}
+   \textbf{Academic Year:}&\academicyear\\
+   \textbf{Duration:}&\durationhours h \durationminutes m\\
+   \textbf{Level:}&\unitlevel
  \end{tabular}
  \end{Form}
 \end{minipage}
